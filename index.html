@@ -333,7 +333,7 @@
     updateSusUI();
 
     // --- Cámara / Escáner ---
-    const btnAbrirCamara = document.getElementById('btnAbrirCamara');
+    const btnEscanear = document.getElementById('btnEscanear');
     const modalCamara = document.getElementById('modalCamara');
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
@@ -348,7 +348,7 @@
 
     let stream = null;
 
-    btnAbrirCamara.addEventListener('click', async () => {
+    btnEscanear.addEventListener('click', async () => {
       modalCamara.classList.remove('hidden');
       modalCamara.classList.add('flex');
       scanResult.innerText = '—';
@@ -505,6 +505,7 @@
 
 </body>
 </html>
+
 
 
 
