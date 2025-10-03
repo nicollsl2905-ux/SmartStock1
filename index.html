@@ -49,7 +49,10 @@
         <input type="text" placeholder="Nombre" id="nombre" class="border rounded p-2" required />
         <div class="flex gap-2">
           <input type="text" placeholder="Código" id="codigo" class="border rounded p-2 flex-1" required />
-          <button type="button" id="btnPasteScan" class="bg-gray-200 px-3 rounded">Pegar/Scan</button>
+          <button type="button" id="btnPasteScan" class="bg-grey-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Pegar/Scan</button>
         </div>
         <input type="number" placeholder="Cantidad" id="cantidad" class="border rounded p-2" required />
         <div class="col-span-2 flex gap-4">
@@ -140,8 +143,14 @@
           <input type="text" id="cardCVC" placeholder="CVC" class="border rounded p-2 w-1/3" required />
         </div>
         <div class="flex justify-end gap-2 mt-2">
-          <button type="button" id="cancelPago" class="px-4 py-2 rounded border">Cancelar</button>
-          <button type="submit" class="px-4 py-2 rounded bg-green-600 text-white">Pagar</button>
+          <button type="button" id="cancelPago" class="bg-red-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Cancelar</button>
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Pagar</button>
         </div>
         <p class="text-xs text-gray-500 mt-2">* Pago simulado. Para pagos reales, integra Stripe/PayPal en backend.</p>
       </form>
@@ -159,9 +168,18 @@
         <div>
           <video id="video" autoplay playsinline class="w-full h-64 bg-black rounded"></video>
           <div class="flex gap-2 mt-2">
-            <button id="captureBtn" class="bg-blue-600 text-white px-3 py-1 rounded">Capturar</button>
-            <button id="detectBtn" class="bg-green-600 text-white px-3 py-1 rounded">Detectar</button>
-            <button id="stopCam" class="bg-red-600 text-white px-3 py-1 rounded">Detener</button>
+            <button id="captureBtn" class="bg-blue-600 text-white px-3 py-1 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Capturar</button>
+            <button id="detectBtn" class="bg-green-600 text-white px-3 py-1 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Detectar</button>
+            <button id="stopCam" class="bg-red-600 text-white px-3 py-1 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Detener</button>
           </div>
         </div>
         <div>
@@ -505,6 +523,7 @@
 
 </body>
 </html>
+
 
 
 
