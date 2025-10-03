@@ -12,7 +12,7 @@
   <header class="bg-gradient-to-r from-blue-600 to-white-700 text-white p-5 flex justify-between items-center shadow-lg">
     <h1 class="text-2xl font-extrabold tracking-wide flex items-center gap-2">📦 SmartStock</h1>
     <div class="flex items-center gap-4">
-      <button id="btnEscanear" class="bg-gradient-to-r from-blue-500 to-white-600 hover:from-white-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105 font-semibold">Abrir cámara</button>
+      <button id="btnEscanear" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105 font-semibold">Escanear</button>
       <div id="susStatus" class="text-sm bg-white text-blue-700 px-3 py-1 rounded-lg shadow">No suscrito</div>
     </div>
   </header>
@@ -53,7 +53,7 @@
         </div>
         <input type="number" placeholder="Cantidad" id="cantidad" class="border rounded p-2" required />
         <div class="col-span-2 flex gap-4">
-          <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded">Agregar</button>
+          <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105 font-semibold">Agregar</button>
         </div>
       </form>
     </section>
@@ -64,17 +64,17 @@
         <h2 class="text-lg font-semibold">Inventario</h2>
         <input type="text" id="buscar" placeholder="Buscar..." class="border rounded p-2" />
       </div>
-      <table class="w-full border-collapse">
+      <table class="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
         <thead>
-          <tr class="bg-gray-200 text-left">
-            <th class="p-2 border">Código</th>
-            <th class="p-2 border">Nombre</th>
-            <th class="p-2 border">Cantidad</th>
-            <th class="p-2 border">Estado</th>
-            <th class="p-2 border">Acción</th>
+          <tr class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <th class="p-3 text-left">Código</th>
+            <th class="p-3 text-left">Nombre</th>
+            <th class="p-3 text-left">Cantidad</th>
+            <th class="p-3 text-left">Estado</th>
+            <th class="p-3 text-left">Acción</th>
           </tr>
         </thead>
-        <tbody id="tablaInventario"></tbody>
+        <tbody id="tablaInventario" class="divide-y divide-gray-200 bg-white"></tbody>
       </table>
     </section>
 
@@ -90,18 +90,24 @@
             <li>✔ Alertas básicas</li>
             <li>✔ Soporte limitado</li>
           </ul>
-          <button class="btnSuscribirse bg-blue-600 text-white px-4 py-2 rounded" data-plan="Basico">Suscribirse</button>
+          <button class="bg-blue-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200" data-plan="Basico">Suscribirse</button>
         </div>
 
-        <div class="bg-blue-50 p-4 rounded-xl shadow border-2 border-blue-600">
-          <h3 class="font-bold text-lg mb-2 text-blue-700">Pro</h3>
-          <p class="text-2xl font-bold mb-2 text-blue-700">$19.99/mes</p>
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition transform hover:scale-105">
+          <h3 class="font-extrabold text-lg mb-2 text-blue-700">Pro</h3>
+          <p class="text-3xl font-extrabold mb-4 text-blue-600">$19.99/mes</p>
           <ul class="text-sm space-y-1 mb-4">
             <li>✔ Hasta 200 productos</li>
             <li>✔ Reportes avanzados</li>
             <li>✔ Soporte prioritario</li>
           </ul>
-          <button class="btnSuscribirse bg-blue-700 text-white px-4 py-2 rounded" data-plan="Pro">Suscribirse</button>
+          <button class="btnSuscribirse bg-blue-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200" data-plan="Pro">Suscribirse</button>
         </div>
 
         <div class="bg-gray-50 p-4 rounded-xl shadow">
@@ -112,7 +118,10 @@
             <li>✔ Reportes completos</li>
             <li>✔ Soporte dedicado</li>
           </ul>
-          <button class="btnSuscribirse bg-blue-600 text-white px-4 py-2 rounded" data-plan="Empresarial">Suscribirse</button>
+          <button class="btnSuscribirse bg-blue-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200" data-plan="Empresarial">Suscribirse</button>
         </div>
       </div>
     </section>
@@ -161,7 +170,10 @@
           <div class="mt-2">
             <label class="block text-sm">Si no detecta, pegue o escriba el código:</label>
             <input id="manualCode" class="border rounded p-2 w-full mt-1" placeholder="Código detectado o manual" />
-            <button id="applyCode" class="mt-2 bg-blue-700 text-white px-3 py-1 rounded">Usar en campo Código</button>
+            <button id="applyCode" class="bg-blue-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Usar en campo Código</button>
           </div>
         </div>
       </div>
@@ -234,7 +246,10 @@
               <td class="p-2 border">${p.cantidad}</td>
               <td class="p-2 border font-bold ${clase}">${estado}</td>
               <td class="p-2 border">
-                <button onclick="eliminarProducto('${p.codigo}')" class="bg-red-600 text-white px-2 py-1 rounded">Eliminar</button>
+                <button onclick="eliminarProducto('${p.codigo}')" class="bg-red-600 text-white px-4 py-2 rounded 
+               shadow-md hover:shadow-lg 
+               transform hover:-translate-y-1 
+               transition duration-200">Eliminar</button>
               </td>
             </tr>
           `;
@@ -490,5 +505,6 @@
 
 </body>
 </html>
+
 
 
