@@ -423,5 +423,71 @@
     // Guardar inventario al cerrar la pestaña
     window.addEventListener('beforeunload', saveInventory);
   </script>
+<!-- Chat de Atención -->
+<div id="chatContainer" class="fixed bottom-20 right-5 w-80 bg-white shadow-xl rounded-lg hidden flex-col">
+  <div class="bg-blue-600 text-white px-4 py-2 flex justify-between items-center rounded-t-lg">
+    <span>Atención al Cliente</span>
+    <button id="closeChat" class="text-white">✖</button>
+  </div>
+  <div id="chatMessages" class="p-4 h-64 overflow-y-auto text-sm space-y-2">
+    <div class="text-gray-500">👋 Hola, ¿en qué puedo ayudarte?</div>
+  </div>
+  <div class="p-2 border-t flex">
+    <input id="chatInput" type="text" placeholder="Escribe un mensaje..." class="flex-1 border rounded px-2 py-1 text-sm" />
+    <button id="sendChat" class="ml-2 bg-blue-600 text-white px-3 rounded">Enviar</button>
+  </div>
+</div>
+<button id="openChat" class="fixed bottom-5 right-5 bg-blue-600 text-white rounded-full w-14 h-14 shadow-lg text-2xl">💬</button>
+
+<script>
+  // --- Chat de Atención ---
+  const chatContainer = document.getElementById('chatContainer');
+  const openChat = document.getElementById('openChat');
+  const closeChat = document.getElementById('closeChat');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const sendChat = document.getElementById('sendChat');
+
+  openChat.addEventListener('click', () => {
+    chatContainer.classList.remove('hidden');
+    openChat.classList.add('hidden');
+  });
+
+  closeChat.addEventListener('click', () => {
+    chatContainer.classList.add('hidden');
+    openChat.classList.remove('hidden');
+  });
+
+  sendChat.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  function sendMessage() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+    addMessage("🧑‍💼", msg, "right");
+    chatInput.value = "";
+
+    // Simulación de respuesta automática
+    setTimeout(() => {
+      let response = "Lo siento, aún no tengo info sobre eso. 😊";
+      if (msg.toLowerCase().includes("precio")) response = "📦 Puedes consultar los planes en la sección 'Planes Premium'.";
+      if (msg.toLowerCase().includes("ayuda")) response = "🙌 Claro, dime qué necesitas y te guiaré.";
+      if (msg.toLowerCase().includes("suscripción")) response = "✅ Puedes gestionar tu suscripción desde el botón 'Suscribirse'.";
+      addMessage("🤖", response, "left");
+    }, 800);
+  }
+
+  function addMessage(sender, text, side) {
+    const div = document.createElement("div");
+    div.className = `flex ${side === "right" ? "justify-end" : "justify-start"}`;
+    div.innerHTML = `<div class="px-3 py-2 rounded-lg ${side === "right" ? "bg-blue-100 text-right" : "bg-gray-200"}">${sender} ${text}</div>`;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+</script>
+
 </body>
 </html>
+
