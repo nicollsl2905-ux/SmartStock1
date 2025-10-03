@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartStock MVP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">📦 SmartStock</h1>
+    <div class="flex items-center gap-4">
+      <button id="btnAbrirCamara" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded">Abrir cámara</button>
+      <div id="susStatus" class="text-sm">No suscrito</div>
+    </div>
+  </header>
+
+  <!-- Imagen de portada -->
+  <section class="relative">
+    <img src="https://www.hostelvending.com/uploads/noticias/img/vending_market.webp" alt="SmartStock Banner" class="w-full h-64 object-cover" />
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+      <h2 class="text-white text-3xl md:text-4xl font-bold">Bienvenido a SmartStock</h2>
+    </div>
+  </section>
+
+  <main class="flex-1 p-6 space-y-6">
+    <!-- Dashboard -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl shadow p-4 text-center">
+        <h2 class="font-semibold">Total Productos</h2>
+        <p id="totalProductos" class="text-2xl font-bold text-blue-600">0</p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-4 text-center">
+        <h2 class="font-semibold">Bajo Stock</h2>
+        <p id="bajoStock" class="text-2xl font-bold text-yellow-500">0</p>
+      </div>
+    </section>
+
+    <!-- Formulario -->
+    <section class="bg-white rounded-xl shadow p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold">Agregar Producto</h2>
+        <div class="text-sm text-gray-600">Puedes escanear con la cámara → botón en el header</div>
+      </div>
+
+      <form id="formProducto" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" placeholder="Nombre" id="nombre" class="border rounded p-2" required />
+        <div class="flex gap-2">
+          <input type="text" placeholder="Código" id="codigo" class="border rounded p-2 flex-1" required />
+          <button type="button" id="btnPasteScan" class="bg-gray-200 px-3 rounded">Pegar/Scan</button>
+        </div>
+        <input type="number" placeholder="Cantidad" id="cantidad" class="border rounded p-2" required />
+        <div class="col-span-2 flex gap-4">
+          <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded">Agregar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Inventario -->
+    <section class="bg-white rounded-xl shadow p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold">Inventario</h2>
+        <input type="text" id="buscar" placeholder="Buscar..." class="border rounded p-2" />
+      </div>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200 text-left">
+            <th class="p-2 border">Código</th>
+            <th class="p-2 border">Nombre</th>
+            <th class="p-2 border">Cantidad</th>
+            <th class="p-2 border">Estado</th>
+            <th class="p-2 border">Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tablaInventario"></tbody>
+      </table>
+    </section>
+
+    <!-- Planes -->
+    <section id="planes" class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-lg font-semibold mb-6 text-center">Planes Premium</h2>
+      <div class="grid md:grid-cols-3 gap-6 text-center">
+        <div class="bg-gray-50 p-4 rounded-xl shadow">
+          <h3 class="font-bold text-lg mb-2">Básico</h3>
+          <p class="text-2xl font-bold mb-2">$9.99/mes</p>
+          <ul class="text-sm space-y-1 mb-4">
+            <li>✔ Hasta 150 productos</li>
+            <li>✔ Alertas básicas</li>
+            <li>✔ Soporte limitado</li>
+          </ul>
+          <button class="btnSuscribirse bg-blue-600 text-white px-4 py-2 rounded" data-plan="Basico">Suscribirse</button>
+        </div>
+
+        <div class="bg-blue-50 p-4 rounded-xl shadow border-2 border-blue-600">
+          <h3 class="font-bold text-lg mb-2 text-blue-700">Pro</h3>
+          <p class="text-2xl font-bold mb-2 text-blue-700">$19.99/mes</p>
+          <ul class="text-sm space-y-1 mb-4">
+            <li>✔ Hasta 200 productos</li>
+            <li>✔ Reportes avanzados</li>
+            <li>✔ Soporte prioritario</li>
+          </ul>
+          <button class="btnSuscribirse bg-blue-700 text-white px-4 py-2 rounded" data-plan="Pro">Suscribirse</button>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-xl shadow">
+          <h3 class="font-bold text-lg mb-2">Empresarial</h3>
+          <p class="text-2xl font-bold mb-2">$49.99/mes</p>
+          <ul class="text-sm space-y-1 mb-4">
+            <li>✔ Productos ilimitados</li>
+            <li>✔ Reportes completos</li>
+            <li>✔ Soporte dedicado</li>
+          </ul>
+          <button class="btnSuscribirse bg-blue-600 text-white px-4 py-2 rounded" data-plan="Empresarial">Suscribirse</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Pago (simulado) -->
+  <div id="modalPago" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-11/12 md:w-1/2">
+      <h3 class="text-xl font-bold mb-4">Suscribirse - <span id="planSelected">Plan</span></h3>
+      <form id="formPago" class="grid gap-3">
+        <input type="text" id="cardName" placeholder="Nombre en la tarjeta" class="border rounded p-2" required />
+        <input type="text" id="cardNumber" placeholder="Número de tarjeta (ej: 4242 4242 4242 4242)" class="border rounded p-2" required />
+        <div class="flex gap-2">
+          <input type="text" id="cardMonth" placeholder="MM" class="border rounded p-2 w-1/3" required />
+          <input type="text" id="cardYear" placeholder="AA" class="border rounded p-2 w-1/3" required />
+          <input type="text" id="cardCVC" placeholder="CVC" class="border rounded p-2 w-1/3" required />
+        </div>
+        <div class="flex justify-end gap-2 mt-2">
+          <button type="button" id="cancelPago" class="px-4 py-2 rounded border">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded bg-green-600 text-white">Pagar</button>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">* Pago simulado. Para pagos reales, integra Stripe/PayPal en backend.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Cámara -->
+  <div id="modalCamara" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-4 w-11/12 md:w-3/4">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="font-bold">Escáner – Cámara</h3>
+        <button id="closeCam" class="text-sm px-2 py-1 rounded border">Cerrar</button>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <video id="video" autoplay playsinline class="w-full h-64 bg-black rounded"></video>
+          <div class="flex gap-2 mt-2">
+            <button id="captureBtn" class="bg-blue-600 text-white px-3 py-1 rounded">Capturar</button>
+            <button id="detectBtn" class="bg-green-600 text-white px-3 py-1 rounded">Detectar</button>
+            <button id="stopCam" class="bg-red-600 text-white px-3 py-1 rounded">Detener</button>
+          </div>
+        </div>
+        <div>
+          <canvas id="canvas" class="w-full h-64 bg-gray-100 rounded"></canvas>
+          <div class="mt-2 text-sm text-gray-600">Resultado detección: <span id="scanResult">—</span></div>
+          <div class="mt-2">
+            <label class="block text-sm">Si no detecta, pegue o escriba el código:</label>
+            <input id="manualCode" class="border rounded p-2 w-full mt-1" placeholder="Código detectado o manual" />
+            <button id="applyCode" class="mt-2 bg-blue-700 text-white px-3 py-1 rounded">Usar en campo Código</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Inventario básico ---
+    const form = document.getElementById("formProducto");
+    const tabla = document.getElementById("tablaInventario");
+    const totalProductos = document.getElementById("totalProductos");
+    const bajoStock = document.getElementById("bajoStock");
+    const buscar = document.getElementById("buscar");
+
+    let inventario = JSON.parse(localStorage.getItem('inventario')) || [];
+
+    function saveInventory() {
+      localStorage.setItem('inventario', JSON.stringify(inventario));
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value.trim();
+      const codigo = document.getElementById("codigo").value.trim();
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+
+      if (!nombre || !codigo || Number.isNaN(cantidad)) return alert('Completa todos los campos');
+
+      // Si existe código, actualizar cantidad sumando
+      const existe = inventario.find(p => p.codigo === codigo);
+      if (existe) {
+        existe.cantidad += cantidad;
+      } else {
+        inventario.push({ codigo, nombre, cantidad });
+      }
+      saveInventory();
+      form.reset();
+      renderTabla();
+    });
+
+    buscar.addEventListener("input", renderTabla);
+
+    function eliminarProducto(codigo) {
+      inventario = inventario.filter(p => p.codigo !== codigo);
+      saveInventory();
+      renderTabla();
+    }
+
+    function renderTabla() {
+      tabla.innerHTML = "";
+      let bajos = 0;
+      const filtro = buscar.value.toLowerCase();
+
+      inventario
+        .filter(p => p.nombre.toLowerCase().includes(filtro) || p.codigo.toLowerCase().includes(filtro))
+        .forEach(p => {
+          let estado = "OK";
+          let clase = "text-green-600";
+
+          if (p.cantidad <= 5) {
+            estado = "Bajo Stock";
+            clase = "text-yellow-500";
+            bajos++;
+          }
+
+          tabla.innerHTML += `
+            <tr>
+              <td class="p-2 border">${p.codigo}</td>
+              <td class="p-2 border">${p.nombre}</td>
+              <td class="p-2 border">${p.cantidad}</td>
+              <td class="p-2 border font-bold ${clase}">${estado}</td>
+              <td class="p-2 border">
+                <button onclick="eliminarProducto('${p.codigo}')" class="bg-red-600 text-white px-2 py-1 rounded">Eliminar</button>
+              </td>
+            </tr>
+          `;
+        });
+
+      totalProductos.innerText = inventario.length;
+      bajoStock.innerText = bajos;
+    }
+
+    // Init
+    renderTabla();
+
+    // --- Suscripción (simulada) ---
+    const susStatus = document.getElementById('susStatus');
+    const btnsSus = document.querySelectorAll('.btnSuscribirse');
+    const modalPago = document.getElementById('modalPago');
+    const planSelectedSpan = document.getElementById('planSelected');
+    const formPago = document.getElementById('formPago');
+    const cancelPago = document.getElementById('cancelPago');
+
+    function getSubscription() {
+      const s = JSON.parse(localStorage.getItem('suscripcion'));
+      if (!s) return null;
+      // comprobar expiración
+      if (new Date(s.expire) <= new Date()) {
+        localStorage.removeItem('suscripcion');
+        return null;
+      }
+      return s;
+    }
+
+    function updateSusUI() {
+      const s = getSubscription();
+      if (s) {
+        susStatus.innerText = `Suscrito: ${s.plan} (vence ${new Date(s.expire).toLocaleDateString()})`;
+      } else {
+        susStatus.innerText = 'No suscrito';
+      }
+    }
+
+    btnsSus.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const plan = btn.dataset.plan;
+        planSelectedSpan.innerText = plan;
+        modalPago.classList.remove('hidden');
+        modalPago.classList.add('flex');
+        // prefill (opcional)
+      });
+    });
+
+    cancelPago.addEventListener('click', () => {
+      modalPago.classList.add('hidden');
+      modalPago.classList.remove('flex');
+    });
+
+    formPago.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Validación básica
+      const name = document.getElementById('cardName').value.trim();
+      const num = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+      const mm = document.getElementById('cardMonth').value.trim();
+      const yy = document.getElementById('cardYear').value.trim();
+      const cvc = document.getElementById('cardCVC').value.trim();
+
+      if (!name || !num || !mm || !yy || !cvc) return alert('Completa todos los datos de la tarjeta (simulado)');
+
+      // Simular pago: guardar suscripción por 30 días
+      const plan = planSelectedSpan.innerText || 'Pro';
+      const expire = new Date();
+      expire.setDate(expire.getDate() + 30);
+
+      localStorage.setItem('suscripcion', JSON.stringify({ plan, expire: expire.toISOString() }));
+      modalPago.classList.add('hidden');
+      modalPago.classList.remove('flex');
+      formPago.reset();
+      updateSusUI();
+      alert('Pago simulado exitoso. ¡Suscripción activada!');
+    });
+
+    // Mostrar estado al cargar
+    updateSusUI();
+
+    // --- Cámara / Escáner ---
+    const btnAbrirCamara = document.getElementById('btnAbrirCamara');
+    const modalCamara = document.getElementById('modalCamara');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureBtn = document.getElementById('captureBtn');
+    const detectBtn = document.getElementById('detectBtn');
+    const stopCam = document.getElementById('stopCam');
+    const closeCam = document.getElementById('closeCam');
+    const scanResult = document.getElementById('scanResult');
+    const manualCode = document.getElementById('manualCode');
+    const applyCode = document.getElementById('applyCode');
+    const btnPasteScan = document.getElementById('btnPasteScan');
+
+    let stream = null;
+
+    btnAbrirCamara.addEventListener('click', async () => {
+      modalCamara.classList.remove('hidden');
+      modalCamara.classList.add('flex');
+      scanResult.innerText = '—';
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = stream;
+      } catch (err) {
+        alert('No se pudo acceder a la cámara: ' + err.message);
+      }
+    });
+
+    closeCam.addEventListener('click', stopAndClose);
+    stopCam.addEventListener('click', stopAndClose);
+
+    function stopAndClose() {
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = null;
+      }
+      video.srcObject = null;
+      modalCamara.classList.add('hidden');
+      modalCamara.classList.remove('flex');
+    }
+
+    captureBtn.addEventListener('click', () => {
+      const ctx = canvas.getContext('2d');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      scanResult.innerText = 'Imagen capturada';
+    });
+
+    // Try to use BarcodeDetector API if available
+    detectBtn.addEventListener('click', async () => {
+      scanResult.innerText = 'Detectando...';
+      // draw current frame to canvas first
+      const ctx = canvas.getContext('2d');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // prefer BarcodeDetector if the browser supports it
+      if ('BarcodeDetector' in window) {
+        try {
+          const barcodeDetector = new BarcodeDetector({ formats: ['qr_code','ean_13','code_128','code_39'] });
+          const detections = await barcodeDetector.detect(canvas);
+          if (detections.length > 0) {
+            const raw = detections.map(d => d.rawValue).join(' | ');
+            scanResult.innerText = raw;
+            manualCode.value = raw;
+            return;
+          } else {
+            scanResult.innerText = 'No se detectó código en la imagen';
+          }
+        } catch (err) {
+          scanResult.innerText = 'Error en detector: ' + err.message;
+        }
+      } else {
+        // Fallback: no BarcodeDetector
+        scanResult.innerText = 'BarcodeDetector no soportado en este navegador. Captura la imagen y copia manualmente.';
+      }
+    });
+
+    // Aplicar código detectado/manual al campo Código
+    applyCode.addEventListener('click', () => {
+      const code = manualCode.value.trim();
+      if (!code) return alert('Ingresa o detecta un código primero');
+      document.getElementById('codigo').value = code;
+      stopAndClose();
+    });
+
+    // btn para pegar desde portapapeles o facilitar inserción
+    btnPasteScan.addEventListener('click', async () => {
+      // Intenta leer portapapeles (texto)
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          document.getElementById('codigo').value = text.trim();
+        } else {
+          alert('Portapapeles vacío. También puedes usar la cámara.');
+        }
+      } catch {
+        alert('No pude leer el portapapeles. Otorga permisos o pega manualmente.');
+      }
+    });
+
+    // Guardar inventario al cerrar la pestaña
+    window.addEventListener('beforeunload', saveInventory);
+  </script>
+</body>
+</html>
